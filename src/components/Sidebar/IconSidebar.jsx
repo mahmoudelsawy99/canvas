@@ -1,5 +1,7 @@
 import { Grid, Image, Type, Shapes, Settings } from "lucide-react";
-import { useState } from "react";
+// import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setActivePanel } from "../../store/Slices/sidebarSlice";
 import ImagePanel from "./ImagePanel";
 import SettingPanel from "./SettingPanel";
 import ShapesPanel from "./ShapesPanel";
@@ -15,51 +17,51 @@ const navigationItems = [
 ];
 
 function IconSidebar() {
-  const [activePanel, setActivePanel] = useState(null);
-  const renderActivePanel = () => {
-    switch (activePanel) {
-      case "templates":
-        return <TemplatesPanel />;
-      case "image":
-        return <ImagePanel />;
-      case "text":
-        return <TextPanel />;
-      case "shapes":
-        return <ShapesPanel />;
-      case "settings":
-        return <SettingPanel />;
-      default:
-        return null;
-    }
+  const dispatch = useDispatch();
+  const { isSidebarVisible, activePanel } = useSelector(
+    (state) => state.sidebar
+  );
+
+  const togglePanel = (name) => {
+    dispatch(setActivePanel(name));
   };
 
-  const handleButtonClick = (name) => {
-    setActivePanel((prevActivePanel) =>
-      prevActivePanel === name ? null : name
-    );
+  const renderActivePanel = () => {
+    if (!activePanel) return null;
+
+    const panels = {
+      templates: <TemplatesPanel />,
+      image: <ImagePanel />,
+      text: <TextPanel />,
+      shapes: <ShapesPanel />,
+      settings: <SettingPanel />,
+    };
+
+    return panels[activePanel];
   };
+
   return (
     <>
       <nav
-        className="fixed right-0 top-0 h-screen w-[90px] bg-white border-l border-gray-200 flex flex-col items-center "
+        className="fixed right-0 top-0 h-screen w-[90px] bg-white border-l border-gray-200 flex flex-col items-center"
         dir="rtl"
       >
         {navigationItems.map((item, index) => (
           <button
             key={index}
             className="w-full py-4 flex flex-col items-center justify-center text-gray-500 hover:bg-[#F4F4F5] hover:text-gray-900 transition-colors"
-            onClick={() => handleButtonClick(item.name)}
+            onClick={() => togglePanel(item.name)}
           >
             <item.icon className="w-5 h-5 my-2" />
             <span className="mt-1 text-[11px] font-medium">{item.label}</span>
           </button>
         ))}
       </nav>
-      {renderActivePanel()}
+
+      {isSidebarVisible && renderActivePanel()}
     </>
   );
 }
 
 IconSidebar.displayName = "IconSidebar";
-
 export default IconSidebar;
