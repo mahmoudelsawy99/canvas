@@ -4,7 +4,6 @@ function ShapesPanel() {
       className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
       dir="rtl"
     >
-      {/* Panel Content */}
       <div className="flex flex-col h-full p-4">
         <div className="mb-6 text-right">
           <h2 className="text-lg font-medium text-gray-900 mb-1 "> الأشكال</h2>

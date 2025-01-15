@@ -1,5 +1,5 @@
 import "./App.css";
-import IconSidebar from "./components/IconSidebar";
+import IconSidebar from "./components/Sidebar/IconSidebar";
 function App() {
   return (
     <>

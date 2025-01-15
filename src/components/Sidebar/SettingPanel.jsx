@@ -11,7 +11,6 @@ function SettingPanel() {
       className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0 overflow-y-auto scroll-smooth"
       dir="ltl"
     >
-      {/* Panel Content */}
       <div className="flex flex-col p-4 text-right">
         <div className="mb-6 text-right">
           <h2 className="text-lg font-medium text-gray-900 mb-1 ">

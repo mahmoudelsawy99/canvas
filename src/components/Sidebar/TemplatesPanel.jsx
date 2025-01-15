@@ -14,7 +14,6 @@ function TemplatesPanel() {
           </p>
         </div>
 
-        {/* Image Grid */}
         <div className="grid grid-cols-2 gap-4 overflow-y-auto">
           <img
             src="/placeholder.svg?height=150&width=150"
