@@ -1,4 +1,3 @@
-import { Grid, Image, Type, Shapes, Settings } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActivePanel } from "../../store/Slices/sidebarSlice";
 import ImagePanel from "./ImagePanel";
@@ -9,15 +8,7 @@ import TextPanel from "./TextPanel";
 import FillColorPanel from "./FillColorPanel";
 import OpacitySidebar from "./OpacityPanel";
 import FontPanel from "./FontPanel";
-
-const navigationItems = [
-  { icon: Grid, label: "القوالب", name: "templates" },
-  { icon: Image, label: "صورة", name: "image" },
-  { icon: Type, label: "نص", name: "text" },
-  { icon: Shapes, label: "أشكال", name: "shapes" },
-  { icon: Settings, label: "الإعدادات", name: "settings" },
-];
-
+import { navigationItems } from "./types";
 function IconSidebar() {
   const dispatch = useDispatch();
   const { isSidebarVisible, activePanel } = useSelector(

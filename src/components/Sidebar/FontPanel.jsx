@@ -1,36 +1,6 @@
 import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
 import { SidebarToggle } from "./SidebarToggle";
-export const fonts = [
-  "Arial",
-  "Arial Black",
-  "Verdana",
-  "Helvetica",
-  "Tahoma",
-  "Trebuchet MS",
-  "Times New Roman",
-  "Georgia",
-  "Garamond",
-  "Courier New",
-  "Brush Script MT",
-  "Palatino",
-  "Bookman",
-  "Comic Sans MS",
-  "Impact",
-  "Lucida Sans Unicode",
-  "Geneva",
-  "Lucida Console",
-  // Arabic Fonts
-  "Amiri",
-  "Cairo",
-  "Droid Arabic Naskh",
-  "Noto Naskh Arabic",
-  "Scheherazade",
-  "Almarai",
-  "Lateef",
-  "Tajawal",
-  "Sakkal Majalla",
-  "Kufi Standard",
-];
+import { fonts } from "./types";
 function FontPanel() {
   return (
     <aside
@@ -41,6 +11,7 @@ function FontPanel() {
       <div
         className="w-full flex-1 pt-6 px-4 overflow-y-auto custom-scrollbar"
         dir="ltr"
+        style={{ maxHeight: "calc(100vh - 90px)" }}
       >
         {fonts.map((font, index) => (
           <button

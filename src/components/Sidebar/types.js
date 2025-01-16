@@ -1,0 +1,46 @@
+import { Grid, Image, Type, Shapes, Settings } from "lucide-react";
+
+export const fonts = [
+  "Arial",
+  "Arial Black",
+  "Verdana",
+  "Helvetica",
+  "Tahoma",
+  "Trebuchet MS",
+  "Times New Roman",
+  "Georgia",
+  "Garamond",
+  "Courier New",
+  "Brush Script MT",
+  "Palatino",
+  "Bookman",
+  "Comic Sans MS",
+  "Impact",
+  "Lucida Sans Unicode",
+  "Geneva",
+  "Lucida Console",
+  // Arabic Fonts
+  "Amiri",
+  "Cairo",
+  "Droid Arabic Naskh",
+  "Noto Naskh Arabic",
+  "Scheherazade",
+  "Almarai",
+  "Lateef",
+  "Tajawal",
+  "Sakkal Majalla",
+  "Kufi Standard",
+  "Lemonada",
+  "Mada",
+  "Reem Kufi",
+  "Janna LT",
+  "Harmattan",
+];
+
+export const navigationItems = [
+  { icon: Grid, label: "القوالب", name: "templates" },
+  { icon: Image, label: "صورة", name: "image" },
+  { icon: Type, label: "نص", name: "text" },
+  { icon: Shapes, label: "أشكال", name: "shapes" },
+  { icon: Settings, label: "الإعدادات", name: "settings" },
+];
