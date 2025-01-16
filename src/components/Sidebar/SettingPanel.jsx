@@ -6,7 +6,7 @@ import { SidebarToggle } from "./SidebarToggle";
 function SettingPanel() {
   const [height, setHeight] = useState("270");
   const [width, setWidth] = useState("794");
-  const [color, setColor] = useState("rgba(255,255,255,1)");
+  const [bgColor, setBgColor] = useState("rgba(255,255,255,1)");
 
   return (
     <aside
@@ -48,7 +48,7 @@ function SettingPanel() {
             </button>
           </div>
           <div className="my-3 px-4 flex justify-center items-center">
-            <ColorPicker value={color} onChange={setColor} />
+            <ColorPicker value={bgColor} onChange={setBgColor} />
           </div>
         </div>
       </div>

@@ -5,8 +5,8 @@ import { SidebarToggle } from "./SidebarToggle";
 function OpacitySidebar() {
   const [opacity, setOpacity] = useState(1);
 
-  const handleOpacityChange = (values) => {
-    setOpacity(values[0]);
+  const handleOpacityChange = (event) => {
+    setOpacity(parseFloat(event.target.value));
   };
 
   return (
@@ -15,6 +15,21 @@ function OpacitySidebar() {
       dir="rtl"
     >
       <HeaderSidebarPanel title="الشفافية" description="تغيير شفافية الصورة" />
+      <div className="p-4 border-b">
+        <div className="flex items-center">
+          <input
+            id="opacity-range"
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={opacity}
+            onChange={handleOpacityChange}
+            className="w-full"
+          />
+        </div>
+      </div>
+
       <SidebarToggle />
     </aside>
   );
