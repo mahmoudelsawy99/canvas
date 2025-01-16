@@ -1,37 +1,23 @@
-// import { useState } from "react";
+import { useState } from "react";
+import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
+import { SidebarToggle } from "./SidebarToggle";
 
-// function OpacitySidebar() {
-//   const [opacity, setOpacity] = useState(1);
+function OpacitySidebar() {
+  const [opacity, setOpacity] = useState(1);
 
-//   const handleOpacityChange = (values) => {
-//     setOpacity(values[0]);
-//   };
+  const handleOpacityChange = (values) => {
+    setOpacity(values[0]);
+  };
 
-//   return (
-//     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg">
-//       <div className="mb-4 text-right">
-//         <h2 className="text-lg font-semibold text-gray-900">الشفافية</h2>
-//         <p className="text-sm text-gray-500">تغيير شفافية الصورة</p>
-//       </div>
+  return (
+    <aside
+      className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
+      dir="rtl"
+    >
+      <HeaderSidebarPanel title="الشفافية" description="تغيير شفافية الصورة" />
+      <SidebarToggle />
+    </aside>
+  );
+}
 
-//       <div className="mt-6">
-//         <Slider
-//           value={[opacity]}
-//           onValueChange={handleOpacityChange}
-//           max={1}
-//           min={0}
-//           step={0.01}
-//           className="w-full"
-//         />
-//       </div>
-
-//       {/* <style jsx global>{`
-//         .opacity-sidebar {
-//           direction: rtl;
-//         }
-//       `}</style> */}
-//     </div>
-//   );
-// }
-
-// export default OpacitySidebar;
+export default OpacitySidebar;

@@ -8,8 +8,8 @@ function FillColorPanel() {
 
   return (
     <aside
-      className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0 overflow-y-auto scroll-smooth"
-      dir="ltl"
+      className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
+      dir="rtl"
     >
       <div className="flex flex-col py-4 text-right">
         <HeaderSidebarPanel title=" لون الخط" description="أختر لون للخط" />

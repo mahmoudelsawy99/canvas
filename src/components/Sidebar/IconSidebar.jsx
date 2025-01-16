@@ -1,5 +1,4 @@
 import { Grid, Image, Type, Shapes, Settings } from "lucide-react";
-// import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActivePanel } from "../../store/Slices/sidebarSlice";
 import ImagePanel from "./ImagePanel";
@@ -7,6 +6,9 @@ import SettingPanel from "./SettingPanel";
 import ShapesPanel from "./ShapesPanel";
 import TemplatesPanel from "./TemplatesPanel";
 import TextPanel from "./TextPanel";
+import FillColorPanel from "./FillColorPanel";
+import OpacitySidebar from "./OpacityPanel";
+import FontPanel from "./FontPanel";
 
 const navigationItems = [
   { icon: Grid, label: "القوالب", name: "templates" },
@@ -35,6 +37,9 @@ function IconSidebar() {
       text: <TextPanel />,
       shapes: <ShapesPanel />,
       settings: <SettingPanel />,
+      fillColor: <FillColorPanel />,
+      opacity: <OpacitySidebar />,
+      font: <FontPanel />,
     };
 
     return panels[activePanel];
