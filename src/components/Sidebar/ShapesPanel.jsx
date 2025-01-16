@@ -16,7 +16,7 @@ function ShapesPanel() {
           description="أضف أشكالًا إلى لوحتك"
         />
 
-        <div className="grid grid-cols-3 gap-4 px-4 max-w-md">
+        <div className="grid grid-cols-3 gap-4 px-4 pt-6 max-w-md">
           <div className="border rounded-lg p-4 flex items-center justify-center">
             <FaCircle className="text-gray-900 w-12 h-12" />
           </div>

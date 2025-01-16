@@ -13,7 +13,7 @@ function TemplatesPanel() {
           description="اختر من بين مجموعة متنوعة من القوالب للبدء"
         />
 
-        <div className="grid grid-cols-2 gap-4 overflow-y-auto px-4">
+        <div className="grid grid-cols-2 gap-4 pt-6 overflow-y-auto px-4">
           <img
             src="/placeholder.svg?height=150&width=150"
             alt="Floral frame 1"

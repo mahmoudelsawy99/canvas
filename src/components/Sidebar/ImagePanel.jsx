@@ -17,7 +17,7 @@ function ImagePanel() {
       <div className="flex flex-col h-full py-4">
         <HeaderSidebarPanel title="الصور" description="أضف الصور إلى لوحتك" />
 
-        <div className="px-4 border-b">
+        <div className="px-4 pt-6 border-b">
           <label className="mb-4 cursor-pointer">
             <input
               type="file"

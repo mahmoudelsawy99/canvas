@@ -16,7 +16,7 @@ const sidebarSlice = createSlice({
     setActivePanel: (state, action) => {
       state.activePanel =
         state.activePanel === action.payload ? null : action.payload;
-      state.isSidebarVisible = !state.isSidebarVisible;
+      state.isSidebarVisible = true;
     },
   },
 });

@@ -10,7 +10,7 @@ function TextPanel() {
       <div className="flex flex-col h-full py-4">
         <HeaderSidebarPanel title="نص" description="أضف نصًا إلى لوحتك" />
 
-        <div className="px-4">
+        <div className="px-4 pt-6">
           <button className="w-full h-10 bg-gray-900 text-white rounded-lg my-2 leading-10">
             أضف مربع نص
           </button>

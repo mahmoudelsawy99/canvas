@@ -2,6 +2,7 @@ import { useState } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
 import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
 import { SidebarToggle } from "./SidebarToggle";
+
 function SettingPanel() {
   const [height, setHeight] = useState("270");
   const [width, setWidth] = useState("794");
@@ -9,21 +10,17 @@ function SettingPanel() {
 
   return (
     <aside
-      className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
+      className="fixed right-[90px] top-0 flex flex-col h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
       dir="ltl"
     >
-      <div className="flex flex-col py-4 text-right">
+      <div className="flex flex-col text-right h-full">
         <HeaderSidebarPanel
           title=" الاعدادات"
           description="  قم بتغيير مظهر مساحة العمل الخاصة بك"
         />
         <div
-          className="w-full max-w-md"
+          className="w-full flex-1 pt-6 overflow-y-auto custom-scrollbar"
           dir="ltl"
-          style={{
-            maxHeight: "500px",
-            overflowY: "auto",
-          }}
         >
           <div className="w-full max-w-md py-2 px-4 space-y-4" dir="rtl">
             <div className="space-y-2">
@@ -59,5 +56,6 @@ function SettingPanel() {
     </aside>
   );
 }
+
 SettingPanel.displayName = "SettingPanel";
 export default SettingPanel;
