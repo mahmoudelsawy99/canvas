@@ -1,12 +1,10 @@
 import "./App.css";
-import IconSidebar from "./components/Sidebar/IconSidebar";
-import TextEditorToolbar from "./components/Sidebar/TextEditorbar";
+import Editor from "./pages/Editor";
 
 function App() {
   return (
     <>
-      <IconSidebar />
-      <TextEditorToolbar />
+      <Editor />
     </>
   );
 }

@@ -1,5 +1,5 @@
-import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
-import { SidebarToggle } from "./SidebarToggle";
+import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
+import { SidebarToggle } from "./ui/SidebarToggle";
 import { fonts } from "./types";
 function FontPanel() {
   return (

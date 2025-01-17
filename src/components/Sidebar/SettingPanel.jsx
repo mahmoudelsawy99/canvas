@@ -1,13 +1,12 @@
 import { useState } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
-import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
-import { SidebarToggle } from "./SidebarToggle";
+import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
+import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
 
 function SettingPanel() {
   const [height, setHeight] = useState("270");
   const [width, setWidth] = useState("794");
-  const [bgColor, setBgColor] = useState("rgba(255,255,255,1)");
-
+  const [bgColor, setBgColor] = useState("#ffffff"); // Default color
   return (
     <aside
       className="fixed right-[90px] top-0 flex flex-col h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"

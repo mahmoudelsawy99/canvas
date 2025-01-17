@@ -41,9 +41,12 @@ const TextEditorToolbar = () => {
     <div
       className={`flex gap-1 ${
         activePanel
-          ? "justify-start items-left pl-32"
-          : "justify-end items-left pr-40"
+          ? "justify-start items-left pl-10"
+          : "justify-end items-left pr-10"
       } py-2 bg-white border-b border-t border-gray-200 `}
+      style={{
+        width: activePanel ? "calc(100vw - 450px)" : "calc(100vw - 90px)",
+      }}
     >
       {/* Left section */}
       <div className="flex items-center justify-between gap-1">

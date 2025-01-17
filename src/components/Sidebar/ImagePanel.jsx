@@ -1,6 +1,6 @@
 import { Search, Upload } from "lucide-react";
-import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
-import { SidebarToggle } from "./SidebarToggle";
+import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
+import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
 function ImagePanel() {
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
@@ -14,7 +14,7 @@ function ImagePanel() {
       className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
       dir="rtl"
     >
-      <div className="flex flex-col h-full py-4">
+      <div className="flex flex-col h-full">
         <HeaderSidebarPanel title="الصور" description="أضف الصور إلى لوحتك" />
 
         <div className="px-4 pt-6 border-b">
@@ -43,7 +43,7 @@ function ImagePanel() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 overflow-y-auto p-4">
+        <div className="grid grid-cols-2 gap-4 p-4" dir="ltr">
           <img
             src="/placeholder.svg?height=150&width=150"
             alt="Floral frame 1"

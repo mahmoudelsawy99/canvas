@@ -1,6 +1,6 @@
 import { ChevronsLeft } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { toggleSidebar } from "../../store/Slices/sidebarSlice";
+import { toggleSidebar } from "../../../store/Slices/sidebarSlice";
 
 export const SidebarToggle = () => {
   const dispatch = useDispatch();

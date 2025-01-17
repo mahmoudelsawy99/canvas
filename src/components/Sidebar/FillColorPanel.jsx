@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
-import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
-import { SidebarToggle } from "./SidebarToggle";
+import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
+import { SidebarToggle } from "./ui/SidebarToggle";
 
 function FillColorPanel() {
   const [color, setColor] = useState("rgba(255,255,255,1)");

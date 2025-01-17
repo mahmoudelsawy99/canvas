@@ -1,8 +1,8 @@
 import { FaCircle, FaSquareFull, FaSquare } from "react-icons/fa";
 import { IoTriangle } from "react-icons/io5";
 import { FaDiamond } from "react-icons/fa6";
-import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
-import { SidebarToggle } from "./SidebarToggle";
+import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
+import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
 
 function ShapesPanel() {
   return (

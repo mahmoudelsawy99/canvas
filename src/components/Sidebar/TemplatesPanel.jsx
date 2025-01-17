@@ -1,5 +1,6 @@
-import { HeaderSidebarPanel } from "./HeaderSidebarPanel";
-import { SidebarToggle } from "./SidebarToggle";
+import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
+import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
+
 function TemplatesPanel() {
   return (
     <aside

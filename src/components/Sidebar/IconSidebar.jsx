@@ -1,44 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setActivePanel } from "../../store/Slices/sidebarSlice";
-import ImagePanel from "./ImagePanel";
-import SettingPanel from "./SettingPanel";
-import ShapesPanel from "./ShapesPanel";
-import TemplatesPanel from "./TemplatesPanel";
-import TextPanel from "./TextPanel";
-import FillColorPanel from "./FillColorPanel";
-import OpacitySidebar from "./OpacityPanel";
-import FontPanel from "./FontPanel";
 import { navigationItems } from "./types";
+import ActivePanel from "./ActivePanel";
 function IconSidebar() {
   const dispatch = useDispatch();
-  const { isSidebarVisible, activePanel } = useSelector(
-    (state) => state.sidebar
-  );
-
   const togglePanel = (name) => {
     dispatch(setActivePanel(name));
   };
 
-  const renderActivePanel = () => {
-    if (!activePanel) return null;
-
-    const panels = {
-      templates: <TemplatesPanel />,
-      image: <ImagePanel />,
-      text: <TextPanel />,
-      shapes: <ShapesPanel />,
-      settings: <SettingPanel />,
-      fillColor: <FillColorPanel />,
-      opacity: <OpacitySidebar />,
-      font: <FontPanel />,
-    };
-
-    return panels[activePanel];
-  };
-
   return (
     <>
-      <nav
+      <aside
         className="fixed right-0 top-0 h-screen w-[90px] bg-white border-l border-gray-200 flex flex-col items-center"
         dir="rtl"
       >
@@ -52,9 +24,8 @@ function IconSidebar() {
             <span className="mt-1 text-[11px] font-medium">{item.label}</span>
           </button>
         ))}
-      </nav>
-
-      {isSidebarVisible && renderActivePanel()}
+      </aside>
+      <ActivePanel />
     </>
   );
 }
