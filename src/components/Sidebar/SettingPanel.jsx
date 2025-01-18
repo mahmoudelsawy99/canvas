@@ -2,11 +2,43 @@ import { useState } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
 import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
 import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
+import { useDispatch } from "react-redux";
+import {
+  setCanvasDimensions,
+  setBackgroundColor,
+} from "../../store/Slices/editorSlice";
 
 function SettingPanel() {
-  const [height, setHeight] = useState("270");
-  const [width, setWidth] = useState("794");
-  const [bgColor, setBgColor] = useState("#ffffff"); // Default color
+  const dispatch = useDispatch();
+  const [height, setHeight] = useState("200");
+  const [width, setWidth] = useState("600");
+  const [bgColor, setBgColor] = useState("#ffffff");
+  const handleResizeCanvas = () => {
+    const newWidth = parseInt(width, 10);
+    const newHeight = parseInt(height, 10);
+
+    if (
+      isNaN(newWidth) ||
+      isNaN(newHeight) ||
+      newWidth <= 0 ||
+      newHeight <= 0
+    ) {
+      return;
+    }
+
+    dispatch(
+      setCanvasDimensions({
+        width: newWidth,
+        height: newHeight,
+      })
+    );
+  };
+
+  const handleBgColorChange = (color) => {
+    setBgColor(color);
+    dispatch(setBackgroundColor(color));
+  };
+
   return (
     <aside
       className="fixed right-[90px] top-0 flex flex-col h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
@@ -42,12 +74,15 @@ function SettingPanel() {
               />
             </div>
 
-            <button className="w-full bg-gray-900 text-white rounded py-3 hover:bg-gray-800 transition-colors">
+            <button
+              className="w-full bg-gray-900 text-white rounded py-3 hover:bg-gray-800 transition-colors"
+              onClick={handleResizeCanvas}
+            >
               تغيير الحجم
             </button>
           </div>
           <div className="my-3 px-4 flex justify-center items-center">
-            <ColorPicker value={bgColor} onChange={setBgColor} />
+            <ColorPicker value={bgColor} onChange={handleBgColorChange} />
           </div>
         </div>
       </div>

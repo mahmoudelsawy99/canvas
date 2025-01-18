@@ -4,7 +4,6 @@ import image1 from "../../../public/images/image1.jpg";
 import { useSelector, useDispatch } from "react-redux";
 
 const ImageEditor = () => {
-  const dispatch = useDispatch();
   const {
     selectedImageUrl,
     canvasObjects,
@@ -20,13 +19,12 @@ const ImageEditor = () => {
   const textRef = useRef(null);
 
   useEffect(() => {
-    const calculatedWidth = window.innerWidth - 200;
     const activepanelWidth = window.innerWidth - 500;
-
+    const width = activePanel ? activepanelWidth : canvasWidth;
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: activePanel ? activepanelWidth : calculatedWidth,
-      height: 200,
-      backgroundColor: "#fff",
+      width: width,
+      height: canvasHeight || 200,
+      backgroundColor: backgroundColor || "#fff",
       selection: true,
     });
 
@@ -94,7 +92,14 @@ const ImageEditor = () => {
     return () => {
       canvas.dispose();
     };
-  }, [activePanel, selectedImageUrl, canvasObjects]);
+  }, [
+    activePanel,
+    selectedImageUrl,
+    canvasObjects,
+    backgroundColor,
+    canvasWidth,
+    canvasHeight,
+  ]);
 
   return (
     <div
