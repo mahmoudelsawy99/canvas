@@ -1,12 +1,24 @@
 import { Search, Upload } from "lucide-react";
 import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
 import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
+import image1 from "../../../public/images/image1.jpg";
+import image2 from "../../../public/images/image2.jpg";
+import image3 from "../../../public/images/image3.jpg";
+import { useDispatch } from "react-redux";
+import { setSelectedImage } from "../../store/Slices/editorSlice";
+
 function ImagePanel() {
+  const dispatch = useDispatch();
+
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
     if (file) {
       console.log("File uploaded:", file);
     }
+  };
+
+  const handleImageClick = (imageUrl) => {
+    dispatch(setSelectedImage(imageUrl));
   };
 
   return (
@@ -45,19 +57,22 @@ function ImagePanel() {
 
         <div className="grid grid-cols-2 gap-4 p-4" dir="ltr">
           <img
-            src="/placeholder.svg?height=150&width=150"
+            src={image1}
             alt="Floral frame 1"
             className="w-full aspect-square object-cover rounded-lg border border-gray-200"
+            onClick={() => handleImageClick(image1)}
           />
           <img
-            src="/placeholder.svg?height=150&width=150"
+            src={image3}
             alt="Floral frame 2"
             className="w-full aspect-square object-cover rounded-lg border border-gray-200"
+            onClick={() => handleImageClick(image3)}
           />
           <img
-            src="/placeholder.svg?height=150&width=150"
+            src={image2}
             alt="Photo preview"
             className="w-full aspect-square object-cover rounded-lg border border-gray-200"
+            onClick={() => handleImageClick(image2)}
           />
         </div>
       </div>

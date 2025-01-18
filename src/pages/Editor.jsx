@@ -4,7 +4,7 @@ import ImageEditor from "../components/Editor/ImageEditor";
 
 const Editor = () => {
   return (
-    <div>
+    <div className="h-screen w-screen">
       <IconSidebar />
       <TextEditorToolbar />
       <ImageEditor />

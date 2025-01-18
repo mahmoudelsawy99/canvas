@@ -1,71 +1,111 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { fabric } from "fabric";
+import image1 from "../../../public/images/image1.jpg";
+import { useSelector, useDispatch } from "react-redux";
 
 const ImageEditor = () => {
+  const dispatch = useDispatch();
+  const {
+    selectedImageUrl,
+    canvasObjects,
+    backgroundColor,
+    canvasWidth,
+    canvasHeight,
+  } = useSelector((state) => state.editor);
+  const { isSidebarVisible, activePanel } = useSelector(
+    (state) => state.sidebar
+  );
   const canvasRef = useRef(null);
+  const imageRef = useRef(null);
+  const textRef = useRef(null);
 
   useEffect(() => {
-    const calculatedWidth = window.innerWidth - 90;
-    // Initialize Fabric.js canvas
+    const calculatedWidth = window.innerWidth - 200;
+    const activepanelWidth = window.innerWidth - 500;
+
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: calculatedWidth,
+      width: activePanel ? activepanelWidth : calculatedWidth,
       height: 200,
-      backgroundColor: "#f0f0f0", // Background color of the canvas
-      selection: true, // Enable object selection
+      backgroundColor: "#fff",
+      selection: true,
     });
 
-    // Add a rectangle to the canvas
-    const rect = new fabric.Rect({
-      left: 100,
-      top: 50,
-      width: 100,
-      height: 100,
-      fill: "red",
-      angle: 0,
-      selectable: true,
-    });
-    canvas.add(rect);
+    if (selectedImageUrl) {
+      fabric.Image.fromURL(selectedImageUrl, (img) => {
+        if (!img) {
+          console.error("Image failed to load.");
+          return;
+        }
 
-    // Add text to the canvas
-    const text = new fabric.Textbox("Hello, Fabric.js!", {
-      left: 200,
-      top: 100,
-      fontSize: 20,
-      fill: "blue",
-      selectable: true,
-    });
-    canvas.add(text);
+        const scale = canvas.getHeight() / img.height;
 
-    // Add an image to the canvas
-    fabric.Image.fromURL("https://via.placeholder.com/150", (img) => {
-      img.set({ left: 400, top: 50, selectable: true });
-      canvas.add(img);
-    });
+        const left = (canvas.getWidth() - img.width * scale) / 2;
 
-    // Handle object selection
+        img.set({
+          left: left,
+          top: 0,
+          scaleX: scale,
+          scaleY: scale,
+          selectable: true,
+          lockScalingY: true,
+          lockMovementX: true,
+          lockMovementY: true,
+        });
+
+        canvas.add(img);
+        imageRef.current = img;
+
+        const imageCenterX = img.left + (img.width * img.scaleX) / 2;
+        const imageCenterY = img.top + (img.height * img.scaleY) / 2;
+        canvasObjects.forEach((obj) => {
+          if (obj.type === "text") {
+            const text = new fabric.Textbox(obj.text, {
+              left: imageCenterX,
+              top: imageCenterY,
+              fontSize: obj.fontSize || 20,
+              fontWeight: obj.fontWeight || "normal",
+              fill: "#101011",
+              selectable: true,
+              originX: "center",
+              originY: "center",
+            });
+            canvas.add(text);
+            text.bringToFront();
+            textRef.current = text;
+          }
+        });
+
+        canvas.renderAll();
+      });
+    }
+
     canvas.on("object:selected", (e) => {
       console.log("Object selected:", e.target);
     });
 
-    // Handle object movement
     canvas.on("object:moving", (e) => {
       console.log("Object moving:", e.target);
     });
 
-    // Handle object scaling
     canvas.on("object:scaling", (e) => {
       console.log("Object scaling:", e.target);
     });
 
-    // Cleanup on component unmount
     return () => {
       canvas.dispose();
     };
-  }, []);
+  }, [activePanel, selectedImageUrl, canvasObjects]);
 
   return (
-    <div className="flex-1 h-full w-full">
-      <canvas ref={canvasRef} className="" />
+    <div
+      className="h-5/6 w-5/6 bg-gray-50"
+      style={{
+        width: activePanel ? "calc(100vw - 450px)" : "calc(100vw - 90px)",
+      }}
+    >
+      <div className="h-full w-full flex justify-center items-center">
+        <canvas ref={canvasRef} />
+      </div>
     </div>
   );
 };
