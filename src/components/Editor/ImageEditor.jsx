@@ -1,22 +1,27 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
-import image1 from "../../../public/images/image1.jpg";
 import { useSelector, useDispatch } from "react-redux";
-
+import { setActiveObject } from "../../store/Slices/editorSlice";
+import { createShape } from "./utils";
 const ImageEditor = () => {
+  const dispatch = useDispatch();
+
   const {
     selectedImageUrl,
     canvasObjects,
     backgroundColor,
     canvasWidth,
     canvasHeight,
+    activeObject,
   } = useSelector((state) => state.editor);
+
   const { isSidebarVisible, activePanel } = useSelector(
     (state) => state.sidebar
   );
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const textRef = useRef(null);
+  const [selectedObject, setSelectedObject] = useState(null);
 
   useEffect(() => {
     const activepanelWidth = window.innerWidth - 500;
@@ -70,6 +75,12 @@ const ImageEditor = () => {
             canvas.add(text);
             text.bringToFront();
             textRef.current = text;
+          } else if (obj.type === "shape") {
+            const shape = createShape(obj, imageCenterX, imageCenterY);
+            if (shape) {
+              canvas.add(shape);
+              shape.bringToFront();
+            }
           }
         });
 
@@ -89,6 +100,16 @@ const ImageEditor = () => {
       console.log("Object scaling:", e.target);
     });
 
+    canvas.on("object:selected", (e) => {
+      setSelectedObject(e.target);
+      dispatch(setActiveObject(e.target));
+    });
+
+    canvas.on("selection:cleared", () => {
+      setSelectedObject(null);
+      dispatch(setActiveObject(null));
+    });
+
     return () => {
       canvas.dispose();
     };
@@ -99,6 +120,7 @@ const ImageEditor = () => {
     backgroundColor,
     canvasWidth,
     canvasHeight,
+    dispatch,
   ]);
 
   return (

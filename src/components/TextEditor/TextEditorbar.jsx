@@ -18,23 +18,103 @@ import {
 import { RxTransparencyGrid } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { setActivePanel } from "../../store/Slices/sidebarSlice";
+import {
+  updateTextFontSize,
+  updateTextFontWeight,
+  updateTextAlign,
+  updateTextFontStyle,
+  updateTextUnderline,
+} from "../../store/Slices/editorSlice";
 
 const TextEditorToolbar = () => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(16);
+  const [fontSize, setFontSize] = useState(16);
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+  const [isUnderline, setIsUnderline] = useState(false);
+  const [textAlign, setTextAlign] = useState("left");
+
   const { isSidebarVisible, activePanel } = useSelector(
     (state) => state.sidebar
   );
+  const { activeObject } = useSelector((state) => state.editor);
   const togglePanel = (name) => {
     dispatch(setActivePanel(name));
   };
 
-  const increment = () => setValue((prev) => prev + 1);
-  const decrement = () => setValue((prev) => Math.max(prev - 1, 0));
+  const increment = () => {
+    const newSize = fontSize + 1;
+    setFontSize(newSize);
+    if (activeObject) {
+      dispatch(updateTextFontSize({ id: activeObject.id, fontSize: newSize }));
+    }
+  };
+
+  const decrement = () => {
+    const newSize = Math.max(fontSize - 1, 0);
+    setFontSize(newSize);
+    if (activeObject) {
+      dispatch(updateTextFontSize({ id: activeObject.id, fontSize: newSize }));
+    }
+  };
+
+  const toggleBold = () => {
+    const newWeight = isBold ? "normal" : "bold";
+    setIsBold(!isBold);
+    if (activeObject) {
+      dispatch(
+        updateTextFontWeight({ id: activeObject.id, fontWeight: newWeight })
+      );
+    }
+  };
+
+  const toggleItalic = () => {
+    const newStyle = isItalic ? "normal" : "italic";
+    setIsItalic(!isItalic);
+    if (activeObject) {
+      dispatch(
+        updateTextFontStyle({ id: activeObject.id, fontStyle: newStyle })
+      );
+    }
+  };
+
+  const toggleUnderline = () => {
+    const newUnderline = !isUnderline;
+    setIsUnderline(newUnderline);
+    if (activeObject) {
+      dispatch(
+        updateTextUnderline({ id: activeObject.id, underline: newUnderline })
+      );
+    }
+  };
+
+  const handleAlignLeft = () => {
+    setTextAlign("left");
+    if (activeObject) {
+      dispatch(updateTextAlign({ id: activeObject.id, textAlign: "left" }));
+    }
+  };
+
+  const handleAlignCenter = () => {
+    setTextAlign("center");
+    if (activeObject) {
+      dispatch(updateTextAlign({ id: activeObject.id, textAlign: "center" }));
+    }
+  };
+
+  const handleAlignRight = () => {
+    setTextAlign("right");
+    if (activeObject) {
+      dispatch(updateTextAlign({ id: activeObject.id, textAlign: "right" }));
+    }
+  };
+
+  // const increment = () => setFontSize((prev) => prev + 1);
+  // const decrement = () => setFontSize((prev) => Math.max(prev - 1, 0));
   const handleInputChange = (e) => {
     const newValue = parseInt(e.target.value, 10);
     if (!isNaN(newValue) && newValue >= 0) {
-      setValue(newValue);
+      setFontSize(newValue);
     }
   };
   return (
@@ -76,13 +156,22 @@ const TextEditorToolbar = () => {
 
       {/* Alignment controls */}
       <div className="flex items-center justify-between gap-1 ml-1">
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={handleAlignLeft}
+        >
           <AlignLeft className="w-5 h-5 text-gray-600" />
         </button>
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={handleAlignCenter}
+        >
           <AlignCenter className="w-5 h-5 text-gray-600" />
         </button>
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={handleAlignRight}
+        >
           <AlignRight className="w-5 h-5 text-gray-600" />
         </button>
       </div>
@@ -96,7 +185,7 @@ const TextEditorToolbar = () => {
           className="w-9 h-9 flex items-center justify-center text-sm text-gray-700 border-l border-r border-gray-200 text-center rounded-none"
           onChange={handleInputChange}
         >
-          {value}
+          {fontSize}
         </div>
         <button className="p-2 hover:bg-gray-100" onClick={increment}>
           <Plus className="w-5 h-5 text-gray-600" />
@@ -105,13 +194,22 @@ const TextEditorToolbar = () => {
 
       {/* Text formatting */}
       <div className="flex items-center gap-1 ml-1">
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={toggleUnderline}
+        >
           <Underline className="w-5 h-5 text-gray-600" />
         </button>
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={toggleItalic}
+        >
           <Italic className="w-5 h-5 text-gray-600" />
         </button>
-        <button className="p-2 hover:bg-gray-100 rounded font-bold">
+        <button
+          className="p-2 hover:bg-gray-100 rounded font-bold"
+          onClick={toggleBold}
+        >
           <Bold className="w-5 h-5 text-gray-600" />
         </button>
       </div>

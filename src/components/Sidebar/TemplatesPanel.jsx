@@ -1,8 +1,8 @@
 import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
 import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
-import image1 from "../../../public/images/image1.jpg";
-import image2 from "../../../public/images/image2.jpg";
-import image3 from "../../../public/images/image3.jpg";
+import image1 from "../../../public/images/image1.png";
+import image2 from "../../../public/images/image2.png";
+import image3 from "../../../public/images/image3.png";
 import { useDispatch } from "react-redux";
 import { setSelectedImage } from "../../store/Slices/editorSlice";
 
