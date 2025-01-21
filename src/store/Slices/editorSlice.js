@@ -20,7 +20,7 @@ const editorSlice = createSlice({
     },
 
     addTextObject: (state, action) => {
-      const { text, fontSize, fontWeight, left, top } = action.payload;
+      const { text, fontSize, fontWeight, left, top, fill } = action.payload;
       const textObject = {
         type: "text",
         text,
@@ -28,6 +28,7 @@ const editorSlice = createSlice({
         fontWeight,
         left,
         top,
+        fill: fill || "#000000",
         id: Date.now(),
       };
       state.canvasObjects.push(textObject);
@@ -77,22 +78,6 @@ const editorSlice = createSlice({
       state.canvasObjects.push(shapeObject);
     },
 
-    updateShapeProperties: (state, action) => {
-      const { id, left, top, width, height, fill, stroke, strokeWidth } =
-        action.payload;
-      const object = state.canvasObjects.find((obj) => obj.id === id);
-      if (object && object.type === "shape") {
-        if (left !== undefined) object.left = left;
-        if (top !== undefined) object.top = top;
-        if (width !== undefined) object.width = width;
-        if (height !== undefined) object.height = height;
-        if (fill !== undefined) object.fill = fill;
-        if (stroke !== undefined) object.stroke = stroke;
-        if (strokeWidth !== undefined) object.strokeWidth = strokeWidth;
-      }
-    },
-
-    ///88
     updateTextFontSize: (state, action) => {
       const { id, fontSize } = action.payload;
       const object = state.canvasObjects.find((obj) => obj.id === id);
@@ -111,6 +96,7 @@ const editorSlice = createSlice({
       const { id, fontStyle } = action.payload;
       const object = state.canvasObjects.find((obj) => obj.id === id);
       if (object && object.type === "text") {
+        console.log(action.payload);
         object.fontStyle = fontStyle;
       }
     },
@@ -118,6 +104,7 @@ const editorSlice = createSlice({
       const { id, underline } = action.payload;
       const object = state.canvasObjects.find((obj) => obj.id === id);
       if (object && object.type === "text") {
+        console.log(action.payload);
         object.underline = underline;
       }
     },
@@ -125,14 +112,22 @@ const editorSlice = createSlice({
       const { id, textAlign } = action.payload;
       const object = state.canvasObjects.find((obj) => obj.id === id);
       if (object && object.type === "text") {
+        console.log(action.payload);
         object.textAlign = textAlign;
       }
     },
     updateTextColor: (state, action) => {
-      const { id, color } = action.payload;
+      const { id, fill } = action.payload;
       const object = state.canvasObjects.find((obj) => obj.id === id);
       if (object && object.type === "text") {
-        object.color = color;
+        object.fill = fill;
+      }
+    },
+    updateTextFontFamily: (state, action) => {
+      const { id, fontFamily } = action.payload;
+      const object = state.canvasObjects.find((obj) => obj.id === id);
+      if (object && object.type === "text") {
+        object.fontFamily = fontFamily;
       }
     },
   },
@@ -155,6 +150,7 @@ export const {
   updateTextUnderline,
   updateTextAlign,
   updateTextColor,
+  updateTextFontFamily,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;

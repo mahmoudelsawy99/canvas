@@ -19,7 +19,9 @@ const ImageEditor = () => {
     (state) => state.sidebar
   );
   const canvasRef = useRef(null);
+  const canvasInstanceRef = useRef(null);
   const imageRef = useRef(null);
+  const selectedObjectRef = useRef(null);
   const textRef = useRef(null);
   const [selectedObject, setSelectedObject] = useState(null);
 
@@ -31,7 +33,14 @@ const ImageEditor = () => {
       height: canvasHeight || 200,
       backgroundColor: backgroundColor || "#fff",
       selection: true,
+      evented: true,
     });
+
+    canvasInstanceRef.current = canvas;
+    const currentCanvasObjects = canvas.getObjects();
+    const currentObjectsMap = new Map(
+      currentCanvasObjects.map((obj) => [obj.id, obj])
+    );
 
     if (selectedImageUrl) {
       fabric.Image.fromURL(selectedImageUrl, (img) => {
@@ -57,24 +66,48 @@ const ImageEditor = () => {
 
         canvas.add(img);
         imageRef.current = img;
-
         const imageCenterX = img.left + (img.width * img.scaleX) / 2;
         const imageCenterY = img.top + (img.height * img.scaleY) / 2;
         canvasObjects.forEach((obj) => {
           if (obj.type === "text") {
-            const text = new fabric.Textbox(obj.text, {
-              left: imageCenterX,
-              top: imageCenterY,
-              fontSize: obj.fontSize || 20,
-              fontWeight: obj.fontWeight || "normal",
-              fill: "#101011",
-              selectable: true,
-              originX: "center",
-              originY: "center",
-            });
-            canvas.add(text);
-            text.bringToFront();
-            textRef.current = text;
+            const existingObject = currentObjectsMap.get(obj.id);
+
+            if (existingObject) {
+              if (
+                existingObject.text !== obj.text ||
+                existingObject.fill !== obj.fill ||
+                existingObject.fontFamily !== obj.fontFamily
+              ) {
+                existingObject.set({
+                  text: obj.text,
+                  fill: obj.fill,
+                  fontFamily: obj.fontFamily,
+                  fontStyle: obj.italic,
+                  underline: obj.underline,
+                  fontSize: obj.fontSize,
+                  textAlign: obj.textAlign,
+                });
+              }
+            } else {
+              const text = new fabric.Textbox(obj.text, {
+                left: imageCenterX,
+                top: imageCenterY,
+                fontSize: obj.fontSize || 20,
+                fontWeight: obj.fontWeight || "normal",
+                fontFamily: obj.fontFamily || "Arial",
+                fill: obj.fill || "#000000",
+                selectable: true,
+                originX: "center",
+                originY: "center",
+                evented: true,
+                id: obj.id,
+                fontStyle: obj.fontStyle || "normal",
+                underline: obj.underline || false,
+                textAlign: obj.textAlign || "left",
+              });
+              canvas.add(text);
+              text.bringToFront();
+            }
           } else if (obj.type === "shape") {
             const shape = createShape(obj, imageCenterX, imageCenterY);
             if (shape) {
@@ -84,43 +117,60 @@ const ImageEditor = () => {
           }
         });
 
+        canvas.on("selection:created", (e) => {
+          let selected = e.selected[0];
+          console.log("Selected object:", e.selected[0].id);
+
+          if (selected.id !== selectedObject?.id) {
+            selectedObjectRef.current = selected;
+            const newSelectedObject = { id: selected.id, type: "text" };
+            setSelectedObject(newSelectedObject);
+            dispatch(setActiveObject(newSelectedObject));
+          }
+        });
+
+        canvas.on("selection:updated", (e) => {
+          const selected = e.selected;
+          console.log("Updated selected object:", e.selected[0].id);
+          if (selected.id !== selectedObject?.id) {
+            selectedObjectRef.current = selected;
+            const newSelectedObject = { id: selected.id, type: "text" };
+            setSelectedObject(newSelectedObject);
+            dispatch(setActiveObject(newSelectedObject));
+          }
+        });
+
+        canvas.on("selection:cleared", () => {
+          selectedObjectRef.current = null;
+          setSelectedObject(null);
+          dispatch(setActiveObject(null));
+        });
+
+        canvas.on("object:moving", (e) => {
+          console.log("Object moving:", e.target);
+        });
+
+        canvas.on("object:scaling", (e) => {
+          console.log("Object scaling:", e.target);
+        });
+
         canvas.renderAll();
       });
     }
-
-    canvas.on("object:selected", (e) => {
-      console.log("Object selected:", e.target);
-    });
-
-    canvas.on("object:moving", (e) => {
-      console.log("Object moving:", e.target);
-    });
-
-    canvas.on("object:scaling", (e) => {
-      console.log("Object scaling:", e.target);
-    });
-
-    canvas.on("object:selected", (e) => {
-      setSelectedObject(e.target);
-      dispatch(setActiveObject(e.target));
-    });
-
-    canvas.on("selection:cleared", () => {
-      setSelectedObject(null);
-      dispatch(setActiveObject(null));
-    });
 
     return () => {
       canvas.dispose();
     };
   }, [
     activePanel,
+    activeObject,
     selectedImageUrl,
     canvasObjects,
     backgroundColor,
     canvasWidth,
     canvasHeight,
-    dispatch,
+    // dispatch,
+    selectedObject,
   ]);
 
   return (

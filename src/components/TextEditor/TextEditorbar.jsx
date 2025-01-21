@@ -80,7 +80,7 @@ const TextEditorToolbar = () => {
 
   const toggleUnderline = () => {
     const newUnderline = !isUnderline;
-    setIsUnderline(newUnderline);
+    setIsUnderline(!isUnderline);
     if (activeObject) {
       dispatch(
         updateTextUnderline({ id: activeObject.id, underline: newUnderline })
@@ -117,12 +117,13 @@ const TextEditorToolbar = () => {
       setFontSize(newValue);
     }
   };
+
   return (
     <div
       className={`flex gap-1 ${
         activePanel
-          ? "justify-start items-left pl-10"
-          : "justify-end items-left pr-10"
+          ? "justify-start items-left pl-20"
+          : "justify-end items-left pr-20"
       } py-2 bg-white border-b border-t border-gray-200 `}
       style={{
         width: activePanel ? "calc(100vw - 450px)" : "calc(100vw - 90px)",
@@ -131,45 +132,32 @@ const TextEditorToolbar = () => {
       {/* Left section */}
       <div className="flex items-center justify-between gap-1">
         <button className="p-2 hover:bg-gray-100 rounded">
-          <Lock className="w-5 h-5 text-gray-600" />
-        </button>
-        <button className="p-2 hover:bg-gray-100 rounded">
           <Trash className="w-5 h-5 text-gray-600" />
-        </button>
-        <button
-          className="p-2 hover:bg-gray-100 rounded"
-          onClick={() => togglePanel("opacity")}
-        >
-          <RxTransparencyGrid className="w-5 h-5 text-gray-600" />
-        </button>
-      </div>
-
-      {/* Arrow controls */}
-      <div className="flex items-center justify-between gap-1 ml-1">
-        <button className="p-2 hover:bg-gray-100 rounded">
-          <ArrowDown className="w-5 h-5 text-gray-600" />
-        </button>
-        <button className="p-2 hover:bg-gray-100 rounded">
-          <ArrowUp className="w-5 h-5 text-gray-600" />
         </button>
       </div>
 
       {/* Alignment controls */}
       <div className="flex items-center justify-between gap-1 ml-1">
         <button
-          className="p-2 hover:bg-gray-100 rounded"
+          className={`p-2 ${
+            textAlign === "left" ? "bg-gray-100" : ""
+          } hover:bg-gray-100 rounded`}
           onClick={handleAlignLeft}
         >
           <AlignLeft className="w-5 h-5 text-gray-600" />
         </button>
         <button
-          className="p-2 hover:bg-gray-100 rounded"
+          className={`p-2 ${
+            textAlign === "center" ? "bg-gray-100" : ""
+          } hover:bg-gray-100 rounded`}
           onClick={handleAlignCenter}
         >
           <AlignCenter className="w-5 h-5 text-gray-600" />
         </button>
         <button
-          className="p-2 hover:bg-gray-100 rounded"
+          className={`p-2 ${
+            textAlign === "rigth" ? "bg-gray-100" : ""
+          } hover:bg-gray-100 rounded`}
           onClick={handleAlignRight}
         >
           <AlignRight className="w-5 h-5 text-gray-600" />
@@ -195,19 +183,25 @@ const TextEditorToolbar = () => {
       {/* Text formatting */}
       <div className="flex items-center gap-1 ml-1">
         <button
-          className="p-2 hover:bg-gray-100 rounded"
+          className={`p-2 ${
+            isUnderline ? "bg-gray-100" : ""
+          } hover:bg-gray-100 rounded`}
           onClick={toggleUnderline}
         >
           <Underline className="w-5 h-5 text-gray-600" />
         </button>
         <button
-          className="p-2 hover:bg-gray-100 rounded"
+          className={`p-2 ${
+            isItalic ? "bg-gray-100" : ""
+          } hover:bg-gray-100 rounded`}
           onClick={toggleItalic}
         >
           <Italic className="w-5 h-5 text-gray-600" />
         </button>
         <button
-          className="p-2 hover:bg-gray-100 rounded font-bold"
+          className={`p-2 ${
+            isBold ? "bg-gray-100" : ""
+          } hover:bg-gray-100 rounded`}
           onClick={toggleBold}
         >
           <Bold className="w-5 h-5 text-gray-600" />
@@ -222,6 +216,12 @@ const TextEditorToolbar = () => {
         >
           <ChevronDown className="w-5 h-5" />
           Arial
+        </button>
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={() => togglePanel("opacity")}
+        >
+          <RxTransparencyGrid className="w-5 h-5 text-gray-600" />
         </button>
         <button
           className="p-2 hover:bg-gray-100 rounded"

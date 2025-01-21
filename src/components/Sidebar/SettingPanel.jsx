@@ -11,7 +11,7 @@ import {
 function SettingPanel() {
   const dispatch = useDispatch();
   const [height, setHeight] = useState("200");
-  const [width, setWidth] = useState("600");
+  const [width, setWidth] = useState("1000");
   const [bgColor, setBgColor] = useState("#ffffff");
   const handleResizeCanvas = () => {
     const newWidth = parseInt(width, 10);
