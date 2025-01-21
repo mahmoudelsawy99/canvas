@@ -104,6 +104,7 @@ const ImageEditor = () => {
                 fontStyle: obj.fontStyle || "normal",
                 underline: obj.underline || false,
                 textAlign: obj.textAlign || "left",
+                width: obj.width || 120,
               });
               canvas.add(text);
               text.bringToFront();
