@@ -32,46 +32,6 @@ const ImageEditor = () => {
     };
   }, [activePanel, canvasWidth, canvasHeight]);
 
-  function generatePDF() {
-    const canvas = canvasInstanceRef.current;
-
-    const imgData = canvas.toDataURL({
-      format: "png",
-      multiplier: 4,
-    });
-
-    const canvasWidth = canvas.getWidth();
-    const canvasHeight = canvas.getHeight();
-
-    const repeatCount = 4;
-
-    const spaceBetween = 20;
-
-    const totalHeight =
-      canvasHeight * repeatCount + spaceBetween * (repeatCount - 1);
-
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "px",
-      format: [canvasWidth, totalHeight],
-    });
-
-    const xOffset = (pdf.internal.pageSize.getWidth() - canvasWidth) / 2;
-
-    for (let i = 0; i < repeatCount; i++) {
-      pdf.addImage(
-        imgData,
-        "PNG",
-        xOffset,
-        (canvasHeight + spaceBetween) * i,
-        canvasWidth,
-        canvasHeight
-      );
-    }
-
-    pdf.save("fabric-canvas-vertical-repeat-centered.pdf");
-  }
-
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: canvasDimensions.width,
@@ -103,16 +63,16 @@ const ImageEditor = () => {
       }
     });
 
-    canvas.on("selection:cleared", () => {
-      selectedObjectRef.current = null;
-      setSelectedObject(null);
-      dispatch(setActiveObject(null));
-    });
+    // canvas.on("selection:cleared", () => {
+    //   selectedObjectRef.current = null;
+    //   setSelectedObject(null);
+    //   dispatch(setActiveObject(null));
+    // });
 
     return () => {
       canvas.dispose();
     };
-  }, [canvasDimensions, dispatch]);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasInstanceRef.current;
@@ -125,6 +85,18 @@ const ImageEditor = () => {
       }
     });
   }, [backgroundColor]);
+
+  useEffect(() => {
+    const canvas = canvasInstanceRef.current;
+    if (!canvas) return;
+
+    canvas.setDimensions({
+      width: canvasDimensions.width,
+      height: canvasDimensions.height,
+    });
+
+    canvas.renderAll();
+  }, [canvasDimensions]);
 
   useEffect(() => {
     const canvas = canvasInstanceRef.current;
@@ -218,6 +190,47 @@ const ImageEditor = () => {
     canvas.renderAll();
   }, [canvasObjects]);
 
+  function generatePDF() {
+    const canvas = canvasInstanceRef.current;
+
+    const imgData = canvas.toDataURL({
+      format: "png",
+      multiplier: 4,
+    });
+
+    const canvasWidth = canvas.getWidth();
+    const canvasHeight = canvas.getHeight();
+
+    const repeatCount = 4;
+    const spaceBetween = 20;
+
+    const totalHeight =
+      canvasHeight * repeatCount + spaceBetween * (repeatCount - 1);
+
+    const fixedPdfWidth = 1000;
+
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "px",
+      format: [fixedPdfWidth, totalHeight],
+    });
+
+    const xOffset = (fixedPdfWidth - canvasWidth) / 2;
+
+    for (let i = 0; i < repeatCount; i++) {
+      pdf.addImage(
+        imgData,
+        "PNG",
+        xOffset,
+        (canvasHeight + spaceBetween) * i,
+        canvasWidth,
+        canvasHeight
+      );
+    }
+
+    pdf.save("fabric-canvas-vertical-repeat-centered-fixed-width.pdf");
+  }
+
   return (
     <div
       className="h-5/6 w-5/6 bg-gray-50"
@@ -250,3 +263,5 @@ const ImageEditor = () => {
 };
 
 export default ImageEditor;
+
+////stable
