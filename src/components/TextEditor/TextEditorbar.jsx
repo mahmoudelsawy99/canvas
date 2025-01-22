@@ -32,7 +32,7 @@ const TextEditorToolbar = () => {
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
-  const [textAlign, setTextAlign] = useState("left");
+  const [textAlign, setTextAlign] = useState("center");
 
   const { isSidebarVisible, activePanel } = useSelector(
     (state) => state.sidebar

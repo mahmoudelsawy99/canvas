@@ -9,6 +9,7 @@ const editorSlice = createSlice({
     canvasWidth: window.innerWidth - 200,
     canvasHeight: 200,
     activeObject: null,
+    savedCanvasState: null,
   },
   reducers: {
     setSelectedImage: (state, action) => {
@@ -130,6 +131,9 @@ const editorSlice = createSlice({
         object.fontFamily = fontFamily;
       }
     },
+    saveCanvasState: (state, action) => {
+      state.savedCanvasState = action.payload;
+    },
   },
 });
 
@@ -151,6 +155,7 @@ export const {
   updateTextAlign,
   updateTextColor,
   updateTextFontFamily,
+  saveCanvasState,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;
