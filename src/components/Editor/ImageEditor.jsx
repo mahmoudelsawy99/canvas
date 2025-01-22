@@ -39,8 +39,10 @@ const ImageEditor = () => {
       backgroundColor: backgroundColor || "#fff",
       selection: true,
       evented: true,
+      selectionFullyContained: true,
     });
 
+    canvas.selection = true;
     canvasInstanceRef.current = canvas;
 
     canvas.on("selection:created", (e) => {
@@ -50,7 +52,9 @@ const ImageEditor = () => {
         const newSelectedObject = { id: selected.id, type: "text" };
         setSelectedObject(newSelectedObject);
         dispatch(setActiveObject(newSelectedObject));
+        selected.bringToFront();
       }
+      selected.sendToBack();
     });
 
     canvas.on("selection:updated", (e) => {
@@ -60,7 +64,9 @@ const ImageEditor = () => {
         const newSelectedObject = { id: selected.id, type: "text" };
         setSelectedObject(newSelectedObject);
         dispatch(setActiveObject(newSelectedObject));
+        selected.bringToFront();
       }
+      selected.sendToBack();
     });
 
     // canvas.on("selection:cleared", () => {
@@ -117,22 +123,20 @@ const ImageEditor = () => {
         scaleX: scale,
         scaleY: scale,
         selectable: true,
+        evented: true,
         lockScalingY: true,
         lockMovementX: true,
         lockMovementY: true,
       });
 
-      // Remove existing image if it exists
       if (imageRef.current) {
         canvas.remove(imageRef.current);
       }
 
-      // Add new image to canvas
       canvas.add(img);
       imageRef.current = img;
-      imageRef.current.bringToFront();
+      imageRef.current.sendToBack();
 
-      // Render the canvas
       canvas.renderAll();
     });
   }, [selectedImageUrl, canvasDimensions]);
@@ -148,14 +152,12 @@ const ImageEditor = () => {
       imageRef.current.top +
       (imageRef.current.height * imageRef.current.scaleY) / 2;
 
-    // Clear existing objects (except the image)
     canvas.getObjects().forEach((obj) => {
       if (obj !== imageRef.current) {
         canvas.remove(obj);
       }
     });
 
-    // Add new canvas objects
     canvasObjects.forEach((obj) => {
       if (obj.type === "text") {
         const text = new fabric.Textbox(obj.text, {
@@ -185,8 +187,7 @@ const ImageEditor = () => {
         }
       }
     });
-
-    // Render the canvas
+    imageRef.current.sendToBack();
     canvas.renderAll();
   }, [canvasObjects]);
 
