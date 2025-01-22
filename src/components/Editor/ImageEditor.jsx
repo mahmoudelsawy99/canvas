@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { fabric } from "fabric";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveObject } from "../../store/Slices/editorSlice";
+import {
+  setActiveObject,
+  updateCanvasPosition,
+} from "../../store/Slices/editorSlice";
 import { createShape } from "./utils";
 import { jsPDF } from "jspdf";
 
@@ -67,6 +70,33 @@ const ImageEditor = () => {
         selected.bringToFront();
       }
       selected.sendToBack();
+    });
+
+    const debounce = (func, delay) => {
+      let timeoutId;
+      return (...args) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+      };
+    };
+
+    const debouncedDispatch = debounce((movedObject) => {
+      dispatch(
+        updateCanvasPosition({
+          id: movedObject.id,
+          top: movedObject.top,
+          left: movedObject.left,
+        })
+      );
+    }, 100);
+
+    canvas.on("object:moving", (e) => {
+      const movedObject = e.target;
+
+      if (movedObject.type === "textbox" || movedObject.type === "shape") {
+        debouncedDispatch(movedObject);
+        console.log(movedObject.id);
+      }
     });
 
     // canvas.on("selection:cleared", () => {
@@ -159,10 +189,11 @@ const ImageEditor = () => {
     });
 
     canvasObjects.forEach((obj) => {
+      const existingObject = canvas.getObjects().find((o) => o.id === obj.id);
       if (obj.type === "text") {
         const text = new fabric.Textbox(obj.text, {
-          left: imageCenterX,
-          top: imageCenterY,
+          left: obj.left || imageCenterX,
+          top: obj.top || imageCenterY,
           fontSize: obj.fontSize || 20,
           fontWeight: obj.fontWeight || "normal",
           fontFamily: obj.fontFamily || "Arial",
