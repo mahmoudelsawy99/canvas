@@ -24,6 +24,7 @@ import {
   updateTextAlign,
   updateTextFontStyle,
   updateTextUnderline,
+  deleteCanvasObject,
 } from "../../store/Slices/editorSlice";
 
 const TextEditorToolbar = () => {
@@ -108,6 +109,11 @@ const TextEditorToolbar = () => {
       dispatch(updateTextAlign({ id: activeObject.id, textAlign: "right" }));
     }
   };
+  const handleDelete = () => {
+    if (activeObject) {
+      dispatch(deleteCanvasObject({ id: activeObject.id }));
+    }
+  };
 
   // const increment = () => setFontSize((prev) => prev + 1);
   // const decrement = () => setFontSize((prev) => Math.max(prev - 1, 0));
@@ -131,7 +137,10 @@ const TextEditorToolbar = () => {
     >
       {/* Left section */}
       <div className="flex items-center justify-between gap-1">
-        <button className="p-2 hover:bg-gray-100 rounded">
+        <button
+          className="p-2 hover:bg-gray-100 rounded"
+          onClick={handleDelete}
+        >
           <Trash className="w-5 h-5 text-gray-600" />
         </button>
       </div>

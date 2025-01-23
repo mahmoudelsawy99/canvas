@@ -137,13 +137,16 @@ const editorSlice = createSlice({
     },
     updateCanvasPosition: (state, action) => {
       const { id, top, left } = action.payload;
-      console.log("akjdk");
       const object = state.canvasObjects.find((obj) => obj.id === id);
       if (object && object.type === "text") {
         console.log(top, left);
         object.top = top;
         object.left = left;
       }
+    },
+    deleteCanvasObject: (state, action) => {
+      const { id } = action.payload;
+      state.canvasObjects = state.canvasObjects.filter((obj) => obj.id !== id);
     },
   },
 });
@@ -168,6 +171,7 @@ export const {
   updateTextFontFamily,
   saveCanvasState,
   updateCanvasPosition,
+  deleteCanvasObject,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;
