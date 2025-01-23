@@ -11,7 +11,7 @@ function IconSidebar() {
   return (
     <>
       <aside
-        className="fixed right-0 top-0 h-screen w-[90px] bg-white border-l border-gray-200 flex flex-col items-center"
+        className="fixed right-0 top-16 h-screen w-[90px] bg-white border-l border-gray-200 flex flex-col items-center"
         dir="rtl"
       >
         {navigationItems.map((item, index) => (

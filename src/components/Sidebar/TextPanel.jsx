@@ -48,7 +48,7 @@ function TextPanel() {
 
   return (
     <aside
-      className="fixed right-[90px] top-0 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
+      className="fixed right-[90px] top-16 h-screen w-[360px] bg-white border-l border-gray-200 transform transition-transform duration-300 z-10 translate-x-0"
       dir="rtl"
     >
       <div className="flex flex-col h-full py-4">

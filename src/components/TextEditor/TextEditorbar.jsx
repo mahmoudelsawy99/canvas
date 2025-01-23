@@ -124,7 +124,7 @@ const TextEditorToolbar = () => {
         activePanel
           ? "justify-start items-left pl-20"
           : "justify-end items-left pr-20"
-      } py-2 bg-white border-b border-t border-gray-200 `}
+      } py-2 bg-white border-b border-gray-200 `}
       style={{
         width: activePanel ? "calc(100vw - 450px)" : "calc(100vw - 90px)",
       }}
