@@ -13,44 +13,46 @@ const Navbar = ({ canvasInstanceRef }) => {
   };
 
   function generatePDF() {
-    const canvas = canvasInstanceRef.current;
+    if (canvasInstanceRef) {
+      const canvas = canvasInstanceRef.current;
 
-    const imgData = canvas.toDataURL({
-      format: "png",
-      multiplier: 4,
-    });
+      const imgData = canvas.toDataURL({
+        format: "png",
+        multiplier: 4,
+      });
 
-    const canvasWidth = canvas.getWidth();
-    const canvasHeight = canvas.getHeight();
+      const canvasWidth = canvas.getWidth();
+      const canvasHeight = canvas.getHeight();
 
-    const repeatCount = 4;
-    const spaceBetween = 20;
+      const repeatCount = 4;
+      const spaceBetween = 20;
 
-    const totalHeight =
-      canvasHeight * repeatCount + spaceBetween * (repeatCount - 1);
+      const totalHeight =
+        canvasHeight * repeatCount + spaceBetween * (repeatCount - 1);
 
-    const fixedPdfWidth = 1000;
+      const fixedPdfWidth = 1000;
 
-    const pdf = new jsPDF({
-      orientation: "landscape",
-      unit: "px",
-      format: [fixedPdfWidth, totalHeight],
-    });
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: [fixedPdfWidth, totalHeight],
+      });
 
-    const xOffset = (fixedPdfWidth - canvasWidth) / 2;
+      const xOffset = (fixedPdfWidth - canvasWidth) / 2;
 
-    for (let i = 0; i < repeatCount; i++) {
-      pdf.addImage(
-        imgData,
-        "PNG",
-        xOffset,
-        (canvasHeight + spaceBetween) * i,
-        canvasWidth,
-        canvasHeight
-      );
+      for (let i = 0; i < repeatCount; i++) {
+        pdf.addImage(
+          imgData,
+          "PNG",
+          xOffset,
+          (canvasHeight + spaceBetween) * i,
+          canvasWidth,
+          canvasHeight
+        );
+      }
+
+      pdf.save("fabric-canvas-vertical-repeat-centered-fixed-width.pdf");
     }
-
-    pdf.save("fabric-canvas-vertical-repeat-centered-fixed-width.pdf");
   }
 
   return (
@@ -64,7 +66,7 @@ const Navbar = ({ canvasInstanceRef }) => {
               <div>
                 <button
                   type="button"
-                  className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                  className="relative flex rounded-full bg-gray-200 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
                   id="user-menu-button"
                   aria-expanded="false"
                   aria-haspopup="true"
@@ -102,7 +104,7 @@ const Navbar = ({ canvasInstanceRef }) => {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 <button
-                  className="rounded-md bg-gray-900 px-3 mx-6 py-2 text-sm font-medium text-white"
+                  className="rounded-md bg-gray-200 px-3 mx-6 py-2 text-sm font-medium text-black"
                   onClick={generatePDF}
                 >
                   تنزيل ملف

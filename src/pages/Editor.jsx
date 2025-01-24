@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveObject,
   updateCanvasPosition,
+  saveCanvasState,
 } from "../store/Slices/editorSlice";
 import { createShape } from "../components/Editor/utils";
 
@@ -193,7 +194,6 @@ const Editor = () => {
     });
 
     canvasObjects.forEach((obj) => {
-      const existingObject = canvas.getObjects().find((o) => o.id === obj.id);
       if (obj.type === "text") {
         const text = new fabric.Textbox(obj.text, {
           left: obj.left || imageCenterX,
@@ -213,6 +213,7 @@ const Editor = () => {
           width: obj.width || 120,
         });
         canvas.add(text);
+        dispatch(saveCanvasState());
         text.bringToFront();
       } else if (obj.type === "shape") {
         const shape = createShape(obj, imageCenterX, imageCenterY);

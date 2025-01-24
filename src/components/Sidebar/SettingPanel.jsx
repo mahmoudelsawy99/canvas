@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
 import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
 import { SidebarToggle } from "./../Sidebar/ui/SidebarToggle";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setCanvasDimensions,
   setBackgroundColor,
@@ -13,6 +13,13 @@ function SettingPanel() {
   const [height, setHeight] = useState("200");
   const [width, setWidth] = useState("1000");
   const [bgColor, setBgColor] = useState("#ffffff");
+  const { canvasWidth, canvasHeight } = useSelector((state) => state.editor);
+
+  useEffect(() => {
+    setHeight(canvasHeight);
+    setWidth(canvasWidth);
+  }, [canvasWidth, canvasHeight]);
+
   const handleResizeCanvas = () => {
     const newWidth = parseInt(width, 10);
     const newHeight = parseInt(height, 10);

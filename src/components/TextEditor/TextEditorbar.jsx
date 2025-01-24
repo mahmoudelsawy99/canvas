@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Bold,
   Italic,
@@ -7,10 +7,7 @@ import {
   AlignCenter,
   AlignRight,
   ChevronDown,
-  Lock,
   Trash,
-  ArrowUp,
-  ArrowDown,
   Minus,
   Plus,
   Square,
@@ -34,11 +31,22 @@ const TextEditorToolbar = () => {
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [textAlign, setTextAlign] = useState("center");
+  const [selectedFont, setSelectedFont] = useState("Arial");
+  const [fillColor, setFillColor] = useState("#000000");
 
   const { isSidebarVisible, activePanel } = useSelector(
     (state) => state.sidebar
   );
-  const { activeObject } = useSelector((state) => state.editor);
+  const { activeObject, canvasObjects } = useSelector((state) => state.editor);
+
+  useEffect(() => {
+    console.log(activeObject.id);
+    const activeObj = canvasObjects.filter((obj) => obj.id === activeObject.id);
+    setFontSize(activeObj[0].fontSize);
+    setFillColor(activeObj[0].fill);
+    setSelectedFont(activeObj[0].fontFamily);
+  }, [activeObject, canvasObjects]);
+
   const togglePanel = (name) => {
     dispatch(setActivePanel(name));
   };
@@ -115,8 +123,6 @@ const TextEditorToolbar = () => {
     }
   };
 
-  // const increment = () => setFontSize((prev) => prev + 1);
-  // const decrement = () => setFontSize((prev) => Math.max(prev - 1, 0));
   const handleInputChange = (e) => {
     const newValue = parseInt(e.target.value, 10);
     if (!isNaN(newValue) && newValue >= 0) {
@@ -224,7 +230,7 @@ const TextEditorToolbar = () => {
           onClick={() => togglePanel("font")}
         >
           <ChevronDown className="w-5 h-5" />
-          Arial
+          {selectedFont}
         </button>
         <button
           className="p-2 hover:bg-gray-100 rounded"
@@ -236,7 +242,7 @@ const TextEditorToolbar = () => {
           className="p-2 hover:bg-gray-100 rounded"
           onClick={() => togglePanel("fillColor")}
         >
-          <Square className="w-5 h-5" fill="black" />
+          <Square className="w-5 h-5" fill={fillColor} />
         </button>
       </div>
     </div>

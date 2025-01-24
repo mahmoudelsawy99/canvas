@@ -132,8 +132,37 @@ const editorSlice = createSlice({
         object.fontFamily = fontFamily;
       }
     },
-    saveCanvasState: (state, action) => {
-      state.savedCanvasState = action.payload;
+    saveCanvasState: (state) => {
+      const canvasObjects = state.canvasObjects.map((obj) => {
+        if (obj.type === "text") {
+          return {
+            type: "text",
+            text: obj.text,
+            fontSize: obj.fontSize,
+            fontFamily: obj.fontFamily,
+            fill: obj.fill,
+            left: obj.left,
+            top: obj.top,
+            fontWeight: obj.fontWeight,
+            fontStyle: obj.fontStyle,
+            underline: obj.underline,
+            textAlign: obj.textAlign,
+            id: obj.id, // Ensure the ID is saved
+          };
+        }
+        return obj;
+      });
+
+      const stateToSave = {
+        selectedImageUrl: state.selectedImageUrl,
+        canvasObjects,
+        backgroundColor: state.backgroundColor,
+        canvasWidth: state.canvasWidth,
+        canvasHeight: state.canvasHeight,
+        activeObject: state.activeObject,
+      };
+
+      localStorage.setItem("editorState", JSON.stringify(stateToSave));
     },
     updateCanvasPosition: (state, action) => {
       const { id, top, left } = action.payload;
@@ -175,3 +204,5 @@ export const {
 } = editorSlice.actions;
 
 export default editorSlice.reducer;
+
+// stable

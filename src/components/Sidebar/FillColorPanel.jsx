@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
 import { HeaderSidebarPanel } from "./ui/HeaderSidebarPanel";
 import { SidebarToggle } from "./ui/SidebarToggle";
@@ -7,8 +7,13 @@ import { updateTextColor } from "../../store/Slices/editorSlice";
 
 function FillColorPanel() {
   const dispatch = useDispatch();
-  const activeObject = useSelector((state) => state.editor.activeObject);
+  const { activeObject, canvasObjects } = useSelector((state) => state.editor);
   const [fillColor, setFillColor] = useState("#000000");
+
+  useEffect(() => {
+    const activeObj = canvasObjects.filter((obj) => obj.id === activeObject.id);
+    setFillColor(activeObj[0].fill);
+  }, [activeObject, canvasObjects]);
 
   const handleFillColorChange = (newColor) => {
     setFillColor(newColor);

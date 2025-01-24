@@ -7,8 +7,8 @@ import { updateTextFontFamily } from "../../store/Slices/editorSlice";
 
 function FontPanel() {
   const dispatch = useDispatch();
-  const activeObject = useSelector((state) => state.editor.activeObject);
-  const [selectedFont, setSelectedFont] = useState("Arial"); // Default font
+  const { activeObject } = useSelector((state) => state.editor);
+  const [selectedFont, setSelectedFont] = useState("Arial");
 
   const handleFontChange = (font) => {
     setSelectedFont(font);

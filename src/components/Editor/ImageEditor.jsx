@@ -18,5 +18,3 @@ const ImageEditor = ({ canvasRef }) => {
 };
 
 export default ImageEditor;
-
-////stable
