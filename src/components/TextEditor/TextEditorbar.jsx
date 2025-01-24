@@ -42,9 +42,11 @@ const TextEditorToolbar = () => {
   useEffect(() => {
     console.log(activeObject.id);
     const activeObj = canvasObjects.filter((obj) => obj.id === activeObject.id);
-    setFontSize(activeObj[0].fontSize);
-    setFillColor(activeObj[0].fill);
-    setSelectedFont(activeObj[0].fontFamily);
+    setFontSize(activeObj[0]?.fontSize);
+    setFillColor(activeObj[0]?.fill);
+    setSelectedFont(
+      activeObj[0]?.fontFamily ? activeObj[0]?.fontFamily : "Arial"
+    );
   }, [activeObject, canvasObjects]);
 
   const togglePanel = (name) => {
