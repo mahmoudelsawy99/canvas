@@ -2,7 +2,6 @@ import TextEditorToolbar from "../components/TextEditor/TextEditorbar";
 import IconSidebar from "../components/Sidebar/IconSidebar";
 import ImageEditor from "../components/Editor/ImageEditor";
 import Navbar from "../components/Navbar/Navbar";
-
 import { useEffect, useRef, useState, useMemo } from "react";
 import { fabric } from "fabric";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +9,7 @@ import {
   setActiveObject,
   updateCanvasPosition,
   saveCanvasState,
+  updateTextContent,
 } from "../store/Slices/editorSlice";
 import { createShape } from "../components/Editor/utils";
 
@@ -75,6 +75,18 @@ const Editor = () => {
         selected.bringToFront();
       }
       selected.sendToBack();
+    });
+
+    canvas.on("object:modified", (e) => {
+      const modifiedObject = e.target;
+      if (modifiedObject.type === "textbox") {
+        dispatch(
+          updateTextContent({
+            id: modifiedObject.id,
+            text: modifiedObject.text,
+          })
+        );
+      }
     });
 
     const debounce = (func, delay) => {

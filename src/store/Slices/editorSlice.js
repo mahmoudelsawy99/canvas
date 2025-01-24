@@ -177,6 +177,13 @@ const editorSlice = createSlice({
       const { id } = action.payload;
       state.canvasObjects = state.canvasObjects.filter((obj) => obj.id !== id);
     },
+    updateTextContent: (state, action) => {
+      const { id, text } = action.payload;
+      const objectIndex = state.canvasObjects.findIndex((obj) => obj.id === id);
+      if (objectIndex !== -1) {
+        state.canvasObjects[objectIndex].text = text;
+      }
+    },
   },
 });
 
@@ -201,6 +208,7 @@ export const {
   saveCanvasState,
   updateCanvasPosition,
   deleteCanvasObject,
+  updateTextContent,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;
