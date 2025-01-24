@@ -48,3 +48,195 @@ custom-scrollbar {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #a8a8a8;
 }
+
+/***************fonts************************/
+/* Adam script not work*/
+@font-face {
+  font-family: "Adam Script";
+  src: url("https://db.onlinewebfonts.com/t/fc9f9dd9a1d0117a405ffa8de1448a01.eot");
+  src: url("https://db.onlinewebfonts.com/t/fc9f9dd9a1d0117a405ffa8de1448a01.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/fc9f9dd9a1d0117a405ffa8de1448a01.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/fc9f9dd9a1d0117a405ffa8de1448a01.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/fc9f9dd9a1d0117a405ffa8de1448a01.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/fc9f9dd9a1d0117a405ffa8de1448a01.svg#Adam Script")
+      format("svg");
+}
+
+/* childos arabic */
+@font-face {
+  font-family: "Childos Arabic DEMO Light";
+  src: url("https://db.onlinewebfonts.com/t/c613960ee6ca1ce0c24e0029cd9e88f4.eot");
+  src: url("https://db.onlinewebfonts.com/t/c613960ee6ca1ce0c24e0029cd9e88f4.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/c613960ee6ca1ce0c24e0029cd9e88f4.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c613960ee6ca1ce0c24e0029cd9e88f4.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/c613960ee6ca1ce0c24e0029cd9e88f4.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/c613960ee6ca1ce0c24e0029cd9e88f4.svg#Childos Arabic DEMO Light")
+      format("svg");
+  font-display: swap;
+}
+
+/*sindbad font not work*/
+@font-face {
+  font-family: "Sindbad";
+  src: url("https://db.onlinewebfonts.com/t/3f332331837674f7b931be72114c7f56.eot");
+  src: url("https://db.onlinewebfonts.com/t/3f332331837674f7b931be72114c7f56.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/3f332331837674f7b931be72114c7f56.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/3f332331837674f7b931be72114c7f56.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/3f332331837674f7b931be72114c7f56.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/3f332331837674f7b931be72114c7f56.svg#Sindbad")
+      format("svg");
+}
+/* XB Shafigh */
+@font-face {
+  font-family: "XB Shafigh";
+  src: url("https://db.onlinewebfonts.com/t/2e1e90baa634f691c18ca05042910887.eot");
+  src: url("https://db.onlinewebfonts.com/t/2e1e90baa634f691c18ca05042910887.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/2e1e90baa634f691c18ca05042910887.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/2e1e90baa634f691c18ca05042910887.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/2e1e90baa634f691c18ca05042910887.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/2e1e90baa634f691c18ca05042910887.svg#XB Shafigh")
+      format("svg");
+}
+/* amiri */
+@font-face {
+  font-family: "Amiri";
+  src: url("/fonts/Amiri-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* cairo */
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/Cairo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* droid */
+@font-face {
+  font-family: "Droid";
+  src: url("/fonts/Droid.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* noto  */
+@font-face {
+  font-family: "Noto Naskh Arabic";
+  src: url("/fonts/NotoNaskhArabic-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* ScheherazadeNew */
+@font-face {
+  font-family: "ScheherazadeNew";
+  src: url("/fonts/ScheherazadeNew-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ScheherazadeNew";
+  src: url("/fonts/ScheherazadeNew-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/**Allura**/
+@font-face {
+  font-family: "Allura";
+  src: url("/fonts/Allura-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/** mada **/
+@font-face {
+  font-family: "Mada";
+  src: url("/fonts/Mada-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+/* Noto Kufi Arabic */
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url("/fonts/NotoKufiArabic-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+/* Dancing Script */
+@font-face {
+  font-family: "Dancing Script";
+  src: url("/fonts/DancingScript-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*Great Vibes*/
+@font-face {
+  font-family: "Great Vibes";
+  src: url("/fonts/GreatVibes-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Tajawal */
+@font-face {
+  font-family: "Tajawal";
+  src: url("/fonts/Tajawal-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Reem Kufi*/
+@font-face {
+  font-family: "Reem Kufi";
+  src: url("/fonts/ReemKufi-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Lemonada */
+@font-face {
+  font-family: "Lemonada";
+  src: url("/fonts/Lemonada-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*Lateef */
+@font-face {
+  font-family: "Lateef";
+  src: url("/fonts/Lateef-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*Harmattan*/
+@font-face {
+  font-family: "Harmattan";
+  src: url("/fonts/Harmattan-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

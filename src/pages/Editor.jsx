@@ -195,6 +195,7 @@ const Editor = () => {
 
     canvasObjects.forEach((obj) => {
       if (obj.type === "text") {
+        console.log(obj.fontFamily);
         const text = new fabric.Textbox(obj.text, {
           left: obj.left || imageCenterX,
           top: obj.top || imageCenterY,

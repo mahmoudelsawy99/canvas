@@ -19,7 +19,7 @@ function TextPanel() {
   const handleAddHeading = () => {
     dispatch(
       addTextObject({
-        text: "عنوان",
+        text: "عنوانamal",
         fontSize: 36,
         fontWeight: "bold",
       })

@@ -26,12 +26,14 @@ function FontPanel() {
       <div
         className="w-full flex-1 pt-6 px-4 overflow-y-auto custom-scrollbar"
         dir="ltr"
-        style={{ maxHeight: "calc(100vh - 90px)" }}
+        style={{ maxHeight: "calc(100vh - 150px)" }}
       >
         {fonts.map((font, index) => (
           <button
             key={index}
-            className="w-full h-16 bg-[#e5e7eb] text-black rounded-lg py-2 my-2 leading-10"
+            className={`w-full h-16 bg-[#e5e7eb] text-black rounded-lg py-2 my-2 leading-10 
+              ${font === "Childos Arabic DEMO Light" ? "font-childos" : ""}
+              `}
             style={{ fontFamily: font }}
             onClick={() => handleFontChange(font)}
           >
