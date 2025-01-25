@@ -31,6 +31,9 @@ const Editor = () => {
   const selectedObjectRef = useRef(null);
   const [selectedObject, setSelectedObject] = useState(null);
 
+
+
+
   const canvasDimensions = useMemo(() => {
     // const activepanelWidth = window.innerWidth - 500;
     return {
@@ -117,6 +120,7 @@ const Editor = () => {
 
   useEffect(() => {
     const canvas = canvasInstanceRef.current;
+    console.log("test")
     if (!canvas) return;
 
     canvas.setBackgroundColor(backgroundColor || "#fff", () => {
