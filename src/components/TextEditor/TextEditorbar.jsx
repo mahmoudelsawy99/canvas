@@ -40,8 +40,9 @@ const TextEditorToolbar = () => {
   const { activeObject, canvasObjects } = useSelector((state) => state.editor);
 
   useEffect(() => {
-    console.log(activeObject.id);
-    const activeObj = canvasObjects.filter((obj) => obj.id === activeObject.id);
+    const activeObj = canvasObjects.filter(
+      (obj) => obj?.id === activeObject?.id
+    );
     setFontSize(activeObj[0]?.fontSize);
     setFillColor(activeObj[0]?.fill);
     setSelectedFont(

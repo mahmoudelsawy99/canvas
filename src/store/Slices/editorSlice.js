@@ -1,16 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const loadStateFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem("editorState");
+    if (serializedState === null) {
+      return undefined;
+    }
+    console.log(JSON.parse(serializedState));
+    return JSON.parse(serializedState);
+  } catch (err) {
+    console.error("Could not load state from local storage", err);
+    return undefined;
+  }
+};
+
+const defaultInitialState = {
+  selectedImageUrl: null,
+  canvasObjects: [],
+  backgroundColor: "#ffffff",
+  canvasWidth: window.innerWidth - 200,
+  canvasHeight: 200,
+  activeObject: null,
+  savedCanvasState: null,
+};
+
+const initialState = loadStateFromLocalStorage() || defaultInitialState;
+
+console.log(initialState);
 const editorSlice = createSlice({
   name: "editor",
-  initialState: {
-    selectedImageUrl: null,
-    canvasObjects: [],
-    backgroundColor: "#ffffff",
-    canvasWidth: window.innerWidth - 200,
-    canvasHeight: 200,
-    activeObject: null,
-    savedCanvasState: null,
-  },
+  initialState,
   reducers: {
     setSelectedImage: (state, action) => {
       state.selectedImageUrl = action.payload;

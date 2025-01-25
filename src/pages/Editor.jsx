@@ -30,6 +30,7 @@ const Editor = () => {
   const imageRef = useRef(null);
   const selectedObjectRef = useRef(null);
   const [selectedObject, setSelectedObject] = useState(null);
+  const [canvasObjs, setCanvasObjs] = useState(null);
 
   const canvasDimensions = useMemo(() => {
     // const activepanelWidth = window.innerWidth - 500;
@@ -41,6 +42,7 @@ const Editor = () => {
   }, [activePanel, canvasWidth, canvasHeight]);
 
   useEffect(() => {
+    console.log("1");
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: canvasDimensions.width,
       height: canvasDimensions.height,
@@ -152,6 +154,8 @@ const Editor = () => {
   }, [canvasDimensions]);
 
   useEffect(() => {
+    console.log("2");
+
     const canvas = canvasInstanceRef.current;
     if (!canvas || !selectedImageUrl) return;
 
@@ -184,61 +188,112 @@ const Editor = () => {
       imageRef.current = img;
       imageRef.current.sendToBack();
 
+      //text
+      const imageCenterX =
+        imageRef.current.left +
+        (imageRef.current.width * imageRef.current.scaleX) / 2;
+      const imageCenterY =
+        imageRef.current.top +
+        (imageRef.current.height * imageRef.current.scaleY) / 2;
+
+      canvas.getObjects().forEach((obj) => {
+        if (obj !== imageRef.current) {
+          canvas.remove(obj);
+        }
+      });
+      canvasObjects.forEach((obj) => {
+        if (obj.type === "text") {
+          const text = new fabric.Textbox(obj.text, {
+            left: obj?.left || imageCenterX,
+            top: obj?.top || imageCenterY,
+            fontSize: obj?.fontSize || 20,
+            fontWeight: obj?.fontWeight || "normal",
+            fontFamily: obj?.fontFamily || "Arial",
+            fill: obj?.fill || "#000000",
+            selectable: true,
+            originX: "center",
+            originY: "center",
+            evented: true,
+            id: obj.id,
+            fontStyle: obj?.fontStyle || "normal",
+            underline: obj?.underline || false,
+            textAlign: obj?.textAlign || "center",
+            width: obj?.width || 120,
+          });
+          canvas.add(text);
+          dispatch(saveCanvasState());
+          text.bringToFront();
+        } else if (obj?.type === "shape") {
+          const shape = createShape(obj, imageCenterX, imageCenterY);
+          if (shape) {
+            canvas.add(shape);
+            shape.bringToFront();
+          }
+        }
+      });
+
+      imageRef.current.sendToBack();
+
       canvas.renderAll();
     });
-  }, [selectedImageUrl, canvasDimensions]);
+  }, [selectedImageUrl, canvasDimensions, canvasObjects]);
 
-  useEffect(() => {
-    const canvas = canvasInstanceRef.current;
-    if (!canvas || !imageRef.current) return;
+  // useEffect(() => {
+  //   console.log("3");
+  //   const canvas = canvasInstanceRef.current;
+  //   if (!canvas || !imageRef.current) {
+  //     console.log("ksdkjksj");
+  //     console.log("canvas", canvas);
+  //     console.log(imageRef.current);
+  //     return;
+  //   }
 
-    const imageCenterX =
-      imageRef.current.left +
-      (imageRef.current.width * imageRef.current.scaleX) / 2;
-    const imageCenterY =
-      imageRef.current.top +
-      (imageRef.current.height * imageRef.current.scaleY) / 2;
+  //   const imageCenterX =
+  //     imageRef.current.left +
+  //     (imageRef.current.width * imageRef.current.scaleX) / 2;
+  //   const imageCenterY =
+  //     imageRef.current.top +
+  //     (imageRef.current.height * imageRef.current.scaleY) / 2;
 
-    canvas.getObjects().forEach((obj) => {
-      if (obj !== imageRef.current) {
-        canvas.remove(obj);
-      }
-    });
+  //   canvas.getObjects().forEach((obj) => {
+  //     if (obj !== imageRef.current) {
+  //       canvas.remove(obj);
+  //     }
+  //   });
+  //   canvasObjects.forEach((obj) => {
+  //     if (obj.type === "text") {
+  //       const text = new fabric.Textbox(obj.text, {
+  //         left: obj?.left || imageCenterX,
+  //         top: obj?.top || imageCenterY,
+  //         fontSize: obj?.fontSize || 20,
+  //         fontWeight: obj?.fontWeight || "normal",
+  //         fontFamily: obj?.fontFamily || "Arial",
+  //         fill: obj?.fill || "#000000",
+  //         selectable: true,
+  //         originX: "center",
+  //         originY: "center",
+  //         evented: true,
+  //         id: obj.id,
+  //         fontStyle: obj?.fontStyle || "normal",
+  //         underline: obj?.underline || false,
+  //         textAlign: obj?.textAlign || "center",
+  //         width: obj?.width || 120,
+  //       });
+  //       canvas.add(text);
+  //       dispatch(saveCanvasState());
+  //       text.bringToFront();
+  //     } else if (obj?.type === "shape") {
+  //       const shape = createShape(obj, imageCenterX, imageCenterY);
+  //       if (shape) {
+  //         canvas.add(shape);
+  //         shape.bringToFront();
+  //       }
+  //     }
+  //   });
 
-    canvasObjects.forEach((obj) => {
-      if (obj.type === "text") {
-        console.log(obj.fontFamily);
-        const text = new fabric.Textbox(obj.text, {
-          left: obj.left || imageCenterX,
-          top: obj.top || imageCenterY,
-          fontSize: obj.fontSize || 20,
-          fontWeight: obj.fontWeight || "normal",
-          fontFamily: obj.fontFamily || "Arial",
-          fill: obj.fill || "#000000",
-          selectable: true,
-          originX: "center",
-          originY: "center",
-          evented: true,
-          id: obj.id,
-          fontStyle: obj.fontStyle || "normal",
-          underline: obj.underline || false,
-          textAlign: obj.textAlign || "center",
-          width: obj.width || 120,
-        });
-        canvas.add(text);
-        dispatch(saveCanvasState());
-        text.bringToFront();
-      } else if (obj.type === "shape") {
-        const shape = createShape(obj, imageCenterX, imageCenterY);
-        if (shape) {
-          canvas.add(shape);
-          shape.bringToFront();
-        }
-      }
-    });
-    imageRef.current.sendToBack();
-    canvas.renderAll();
-  }, [canvasObjects]);
+  //   imageRef.current.sendToBack();
+  //   canvas.renderAll();
+  // }, [canvasObjects]);
 
   return (
     <div className="h-screen w-screen">
