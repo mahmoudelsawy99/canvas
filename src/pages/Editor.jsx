@@ -10,6 +10,8 @@ import {
   updateCanvasPosition,
   saveCanvasState,
   updateTextContent,
+  updateTextDimensions,
+  updateImageDimensions,
 } from "../store/Slices/editorSlice";
 import { createShape } from "../components/Editor/utils";
 
@@ -21,7 +23,6 @@ const Editor = () => {
     backgroundColor,
     canvasWidth,
     canvasHeight,
-    activeObject,
   } = useSelector((state) => state.editor);
   const { activePanel } = useSelector((state) => state.sidebar);
 
@@ -30,10 +31,6 @@ const Editor = () => {
   const imageRef = useRef(null);
   const selectedObjectRef = useRef(null);
   const [selectedObject, setSelectedObject] = useState(null);
-  const [canvasObjs, setCanvasObjs] = useState(null);
-
-
-
 
   const canvasDimensions = useMemo(() => {
     // const activepanelWidth = window.innerWidth - 500;
@@ -91,6 +88,17 @@ const Editor = () => {
             text: modifiedObject.text,
           })
         );
+
+        const newWidth = modifiedObject.getScaledWidth();
+        const newHeight = modifiedObject.getScaledHeight();
+        console.log(newHeight, newWidth);
+        dispatch(
+          updateTextDimensions({
+            id: modifiedObject.id,
+            width: newWidth,
+            height: newHeight,
+          })
+        );
       }
     });
 
@@ -121,6 +129,26 @@ const Editor = () => {
       }
     });
 
+    canvas.on("object:scaling", (e) => {
+      const scaledObject = e.target;
+
+      if (scaledObject === imageRef.current) {
+        console.log(scaledObject);
+        const newWidth = scaledObject.getScaledWidth();
+        const newHeight = scaledObject.getScaledHeight();
+        const scaleX = scaledObject.scaleX;
+        const scaleY = scaledObject.scaleY;
+        dispatch(
+          updateImageDimensions({
+            width: newWidth,
+            height: newHeight,
+            scaleX: scaleX,
+            scaleY: scaleY,
+          })
+        );
+      }
+    });
+
     // canvas.on("selection:cleared", () => {
     //   selectedObjectRef.current = null;
     //   setSelectedObject(null);
@@ -134,7 +162,7 @@ const Editor = () => {
 
   useEffect(() => {
     const canvas = canvasInstanceRef.current;
-    console.log("test")
+    console.log("test");
     if (!canvas) return;
 
     canvas.setBackgroundColor(backgroundColor || "#fff", () => {
@@ -168,7 +196,6 @@ const Editor = () => {
         console.error("Image failed to load.");
         return;
       }
-
       const scale = canvasDimensions.height / img.height;
       const left = (canvasDimensions.width - img.width * scale) / 2;
 
@@ -180,7 +207,7 @@ const Editor = () => {
         selectable: true,
         evented: true,
         lockScalingY: true,
-        lockMovementX: true,
+        lockMovementX: false,
         lockMovementY: true,
       });
 
