@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import image1 from "../../../public/images/image1.png";
 import { jsPDF } from "jspdf";
@@ -14,46 +15,71 @@ const Navbar = ({ canvasInstanceRef }) => {
 
   function generatePDF() {
     if (canvasInstanceRef) {
-      const canvas = canvasInstanceRef.current;
+        const canvas = canvasInstanceRef.current;
 
-      const imgData = canvas.toDataURL({
-        format: "png",
-        multiplier: 4,
-      });
+        const imgData = canvas.toDataURL({
+            format: "png",
+            multiplier: 4,
+        });
 
-      const canvasWidth = canvas.getWidth();
-      const canvasHeight = canvas.getHeight();
+        // eslint-disable-next-line react/prop-types
+        const canvasWidth = canvas.getWidth();
+        // eslint-disable-next-line react/prop-types
+        const canvasHeight = canvas.getHeight();
 
-      const repeatCount = 4;
-      const spaceBetween = 20;
+        const repeatCount = 4; 
+        const spaceBetween = 20; 
 
-      const totalHeight =
-        canvasHeight * repeatCount + spaceBetween * (repeatCount - 1);
+        const totalHeight =
+            canvasHeight * repeatCount + spaceBetween * (repeatCount - 1);
 
-      const fixedPdfWidth = 1000;
+        const fixedPdfWidth = 1000;
 
-      const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "px",
-        format: [fixedPdfWidth, totalHeight],
-      });
+        const pdf = new jsPDF({
+            orientation: "landscape",
+            unit: "px",
+            format: [fixedPdfWidth, totalHeight],
+        });
 
-      const xOffset = (fixedPdfWidth - canvasWidth) / 2;
+        const xOffset = (fixedPdfWidth - canvasWidth) / 2;
 
-      for (let i = 0; i < repeatCount; i++) {
-        pdf.addImage(
-          imgData,
-          "PNG",
-          xOffset,
-          (canvasHeight + spaceBetween) * i,
-          canvasWidth,
-          canvasHeight
-        );
-      }
+        for (let i = 0; i < repeatCount; i++) {
+            pdf.addImage(
+                imgData,
+                "PNG",
+                xOffset,
+                (canvasHeight + spaceBetween) * i,
+                canvasWidth,
+                canvasHeight
+            );
+        }
 
-      pdf.save("fabric-canvas-vertical-repeat-centered-fixed-width.pdf");
+        // Adding a repeated watermark to the PDF
+        const watermarkText = "https://www.thems.io"; // Replace with your watermark text
+        pdf.setTextColor(200, 200, 200); // Light gray color for watermark
+        pdf.setFontSize(30); // Font size for watermark
+        pdf.setFont("helvetica", "bold");
+
+        const watermarkXSpacing = 200; // Horizontal spacing between watermarks
+        const watermarkYSpacing = 150; // Vertical spacing between watermarks
+
+        // Add watermark text in a grid pattern on each page
+        const pageCount = pdf.internal.getNumberOfPages();
+        for (let pageNum = 1; pageNum <= pageCount; pageNum++) {
+            pdf.setPage(pageNum);
+
+            for (let y = 0; y < totalHeight; y += watermarkYSpacing) {
+                for (let x = 0; x < fixedPdfWidth; x += watermarkXSpacing) {
+                    pdf.text(watermarkText, x, y, {
+                        angle: 45, // Rotate the watermark text
+                    });
+                }
+            }
+        }
+
+        pdf.save("fabric-canvas-repeated-watermark.pdf");
     }
-  }
+}
 
   return (
     <nav className="h-16 bg-white border-b">
