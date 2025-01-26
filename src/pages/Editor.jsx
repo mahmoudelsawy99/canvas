@@ -10,8 +10,8 @@ import {
   updateCanvasPosition,
   saveCanvasState,
   updateTextContent,
-  updateTextDimensions,
-  updateImageDimensions,
+  // updateTextDimensions,
+  // updateImageDimensions,
 } from "../store/Slices/editorSlice";
 import { createShape } from "../components/Editor/utils";
 
@@ -93,6 +93,7 @@ const Editor = () => {
         const newHeight = modifiedObject.getScaledHeight();
         console.log(newHeight, newWidth);
         dispatch(
+          // eslint-disable-next-line no-undef
           updateTextDimensions({
             id: modifiedObject.id,
             width: newWidth,
@@ -129,24 +130,24 @@ const Editor = () => {
       }
     });
 
-    canvas.on("object:scaling", (e) => {
-      const scaledObject = e.target;
+    // canvas.on("object:scaling", (e) => {
+      // const scaledObject = e.target;
 
-      if (scaledObject === imageRef.current) {
-        console.log(scaledObject);
-        const newWidth = scaledObject.getScaledWidth();
-        const newHeight = scaledObject.getScaledHeight();
-        const scaleX = scaledObject.scaleX;
-        const scaleY = scaledObject.scaleY;
-        dispatch(
-          updateImageDimensions({
-            width: newWidth,
-            height: newHeight,
-            scaleX: scaleX,
-            scaleY: scaleY,
-          })
-        );
-      }
+      // if (scaledObject === imageRef.current) {
+      //   console.log(scaledObject);
+      //   const newWidth = scaledObject.getScaledWidth();
+      //   const newHeight = scaledObject.getScaledHeight();
+      //   const scaleX = scaledObject.scaleX;
+      //   const scaleY = scaledObject.scaleY;
+      //   dispatch(
+      //     updateImageDimensions({
+      //       width: newWidth,
+      //       height: newHeight,
+      //       scaleX: scaleX,
+      //       scaleY: scaleY,
+      //     })
+      //   );
+      // }
     });
 
     // canvas.on("selection:cleared", () => {
@@ -155,10 +156,10 @@ const Editor = () => {
     //   dispatch(setActiveObject(null));
     // });
 
-    return () => {
-      canvas.dispose();
-    };
-  }, []);
+    // return () => {
+      // canvas.dispose();
+    // };
+  // }, []);
 
   useEffect(() => {
     const canvas = canvasInstanceRef.current;
