@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/mahmoudelsawy99/canvas",
+  "homepage": "https://mahmoudelsawy99.github.io/canvas",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
